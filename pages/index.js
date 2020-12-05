@@ -1,6 +1,20 @@
 import styled from 'styled-components'
-import { down } from "styled-breakpoints";
-import { useBreakpoint } from "styled-breakpoints/react-styled";
+
+function useMobile() {
+	const [mobile, setMobile] = React.useState(null);
+	const callback = React.useCallback((e) => {
+		setMobile(e.matches);
+	}, []);
+	React.useEffect(() => {
+		const mqlist = window.matchMedia("(max-width: 767px)");
+		mqlist.addEventListener("change", callback);
+		setMobile(mqlist.matches);
+		return function cleanup() {
+			mqlist.removeEventListener("change", callback);
+		}
+	}, []);
+	return mobile;
+}
 
 const Container = styled.div`
 	display: flex;
@@ -46,22 +60,16 @@ function Content({ mobile }) {
 }
 
 function InitMobile() {
-	let mobile = true;
-	try {
-		mobile = useBreakpoint(down("sm"));
-	} catch {
-		// Do nothing; we're probably doing SSR
-	}
+	const mobile = useMobile();
 	return <Content mobile={mobile} />;
 }
 
+// These two components are the same in this version, since I don't need to
+// initialize `mobile` to anything since useEffect doesn't run during SSR and
+// raise an exception.
+
 function InitDesktop() {
-	let mobile = false;
-	try {
-		mobile = useBreakpoint(down("sm"));
-	} catch {
-		// Do nothing; we're probably doing SSR
-	}
+	const mobile = useMobile();
 	return <Content mobile={mobile} />;
 }
 
@@ -79,12 +87,7 @@ export default function Home() {
 	// resizes.
 
 	const [initialMobile, setInitialMobile] = React.useState(null);
-	let currentMobile = null;
-	try {
-		currentMobile = useBreakpoint(down("sm"));
-	} catch {
-		// Do nothing; we're probably doing SSR
-	}
+	const currentMobile = useMobile();
 	if (initialMobile == null && currentMobile != null) {
 		setInitialMobile(currentMobile);
 	}
