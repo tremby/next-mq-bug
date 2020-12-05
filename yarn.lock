@@ -3726,6 +3726,11 @@ style-loader@1.2.1:
     loader-utils "^2.0.0"
     schema-utils "^2.6.6"
 
+styled-breakpoints@^9.0.3:
+  version "9.0.3"
+  resolved "https://registry.yarnpkg.com/styled-breakpoints/-/styled-breakpoints-9.0.3.tgz#5c74cd71748c34cb2c4dcf02e7ee18e561eaa5aa"
+  integrity sha512-3jDnnE7hVAIFNHsulKsygKalDAOxkDgTHuPAYneTEk2IdWLbDPYjEZ0/b5bswUZPJ57KO3DGo64RRQivWvIFqA==
+
 styled-components@^5.0.0:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-5.2.1.tgz#6ed7fad2dc233825f64c719ffbdedd84ad79101a"
